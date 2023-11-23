@@ -23,9 +23,9 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd;cd terraform/ ; terraform init'
-                sh "pwd;cd terraform/ ; terraform plan -out tfplan"
-                sh 'pwd;cd terraform/ ; terraform show -no-color tfplan > tfplan.txt'
+                sh 'pwd;cd terraform/ ; /opt/homebrew/bin/terraform init'
+                sh "pwd;cd terraform/ ; /opt/homebrew/bin/terraform plan -out tfplan"
+                sh 'pwd;cd terraform/ ; /opt/homebrew/bin/terraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "pwd;cd terraform/ ; terraform apply -input=false tfplan"
+                sh "pwd;cd terraform/ ; /opt/homebrew/bin/terraform apply -input=false tfplan"
             }
         }
     }
