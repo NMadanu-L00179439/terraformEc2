@@ -2,6 +2,13 @@ provider "aws" {
   region     = "eu-west-1"
 }
 
+resource "aws_subnet" "PublicSubnet_A" {
+  availability_zone = "eu-west-1a"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "PublicSubnet_A"
+  }
+}
 
 resource "aws_security_group" "aws_sg" {
   name = "security group from terraform"
@@ -38,6 +45,7 @@ resource "aws_instance" "aws_ins_web" {
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.aws_sg.id]
   associate_public_ip_address = true
+  subnet_id = "${aws_subnet.PublicSubnet_A.id}"
   key_name                    = "ec2creationkey" # your key here
 
   tags = {
